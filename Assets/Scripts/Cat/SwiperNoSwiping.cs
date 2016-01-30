@@ -2,8 +2,11 @@
 using System.Collections;
 
 public class SwiperNoSwiping : MonoBehaviour {
+    public bool logging = false;
     public GameObject LeftPaw;
+    public Animator lpAnim;
     public GameObject RightPaw;
+    public Animator rpAnim;
 
 
 
@@ -24,6 +27,17 @@ public class SwiperNoSwiping : MonoBehaviour {
 
     public void Swipe(bool goRight = false)
     {
-
+        if (goRight)
+        {
+            if (logging) Debug.Log("LOG: Swipey rightey");
+            rpAnim.SetTrigger("DoBap");
+            rpAnim.SetInteger("BapType", Random.Range(0, 2));
+        }
+        else
+        {
+            if (logging) Debug.Log("LOG: Swipey leftey");
+            lpAnim.SetTrigger("DoBap");
+            lpAnim.SetInteger("BapType", Random.Range(0,3));
+        }
     }
 }
