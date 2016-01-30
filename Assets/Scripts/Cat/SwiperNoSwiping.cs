@@ -31,7 +31,7 @@ public class SwiperNoSwiping : MonoBehaviour {
         {
             if (logging) Debug.Log("LOG: Swipey rightey");
             rpAnim.SetTrigger("DoBap");
-            rpAnim.SetInteger("BapType", Random.Range(0, 2));
+            rpAnim.SetInteger("BapType", Random.Range(0, 3));
         }
         else
         {
