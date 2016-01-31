@@ -11,19 +11,33 @@ public class KnockObjects : MonoBehaviour
 	void OnCollisionEnter(Collision Other)
 	{
 		ExpPos = transform.position;
-		if(Other.transform.CompareTag("Player"))
+		if(Other.transform.CompareTag("Pawz"))
 		{
-			transform.gameObject.SetActive (false);
-
-			//transform.GetComponent<Rigidbody> ().AddExplosionForce (Power, ExpPos, radius);
-
+			
 			for (int x = 0; x < BrokenObjects.Length; x++) 
 			{
 				GameObject tempObject = (GameObject)Instantiate (BrokenObjects [x],transform.position, Quaternion.identity);
-				BrokenObjects [x].transform.GetComponent<Rigidbody> ().AddExplosionForce (Power,tempObject.transform.position , radius);
+				tempObject.transform.GetComponent<Rigidbody> ().AddExplosionForce (Power,tempObject.transform.position , radius);
 			}
 
+			transform.gameObject.SetActive (false);
+		}
+		else if (!this.transform.CompareTag ("Cake"))
+		{
+			if(Other.transform.CompareTag("Ground"))
+			{
+				//transform.gameObject.SetActive (false);
 
+				for (int x = 0; x < BrokenObjects.Length; x++) 
+				{
+					GameObject tempObject = (GameObject)Instantiate (BrokenObjects [x],transform.position, Quaternion.identity);
+					tempObject.transform.GetComponent<Rigidbody> ().AddExplosionForce (Power,tempObject.transform.position , radius);
+				}		
+
+				transform.gameObject.SetActive (false);
+			}
+
+			//transform.gameObject.SetActive (false);
 		}
 	}
 }
