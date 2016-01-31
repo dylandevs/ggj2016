@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour {
 	GameStates gameState = GameStates.Menu;
 	GameObject cat;
 	GameObject menu;
+	GameObject end;
+	Transform endCamTarget;//Cat's Face
 	Transform menuPivot;
 	Text countDownText;
 
@@ -28,6 +30,11 @@ public class GameController : MonoBehaviour {
 		menu = GameObject.Find("Menu");
 		menuPivot = menu.transform.FindChild("MenuPivot").transform;
 		countDownText = GameObject.Find("HUD/CountDown/Text").GetComponent<Text>();
+		endCamTarget = cat.transform.FindChild("Body");
+
+		end = GameObject.Find("End");
+		end.SetActive(false);
+
 		ChangeGameState(GameStates.Menu);
 	}
 	
@@ -68,8 +75,29 @@ public class GameController : MonoBehaviour {
 			cat.SetActive(false);
 			menu.SetActive(true);
 		} else if (gameState == GameStates.End){
-			cat.SetActive(false);
 			menu.SetActive(false);
+			end.SetActive(true);
+
+			GameObject.Find("CatPOVCam").SetActive(false);
+			GameObject.Find("Cat").GetComponent<UnityStandardAssets.Characters.FirstPerson.CatController>().enabled = false;
+			GameObject.Find("Cat").GetComponent<SwiperNoSwiping>().enabled = false;
+
+			//Transform _tempFrontCatFace = cat.transform.FindChild("wiskers");
+			endCamTarget.gameObject.SetActive(true);
+			Transform _tempCatFace = endCamTarget.FindChild("wiskers");
+			endCamTarget.transform.eulerAngles = new Vector3(0.0f,endCamTarget.transform.eulerAngles.y,0.0f);
+			endCamTarget.GetComponent<Rigidbody>().freezeRotation = true;
+			//_tempCatFace.eulerAngles = new Vector3(0.0f,0.0f,0.0f);
+			//_tempCatFace.GetComponent<Rigidbody>().fr
+
+			end.transform.position = new Vector3(_tempCatFace.position.x,
+												 _tempCatFace.position.y,
+												 _tempCatFace.position.z);
+			end.transform.eulerAngles = new Vector3(0.0f,
+				 									_tempCatFace.eulerAngles.y,
+													0.0f);
+
+			//cat.SetActive(false);
 		}
 	}
 
