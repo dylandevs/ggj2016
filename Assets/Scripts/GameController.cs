@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -12,12 +13,13 @@ public class GameController : MonoBehaviour {
 	};
 
 	public float startTimeSeconds;
+	public static float timeLeftSeconds;
 
-	float timeLeftSeconds;
 	GameStates gameState = GameStates.Menu;
 	GameObject cat;
 	GameObject menu;
 	Transform menuPivot;
+	Text countDownText;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +27,7 @@ public class GameController : MonoBehaviour {
 		cat = GameObject.Find("Cat");
 		menu = GameObject.Find("Menu");
 		menuPivot = menu.transform.FindChild("MenuPivot").transform;
+		countDownText = GameObject.Find("HUD/CountDown/Text").GetComponent<Text>();
 		ChangeGameState(GameStates.Menu);
 	}
 	
@@ -39,9 +42,10 @@ public class GameController : MonoBehaviour {
 			}
 
 		} else if (gameState == GameStates.Playing){
-			if (timeLeftSeconds > 0)
+			if (timeLeftSeconds > 0){
 				timeLeftSeconds -= Time.deltaTime;
-			else {
+				countDownText.text = Mathf.FloorToInt(timeLeftSeconds).ToString();
+			} else {
 				timeLeftSeconds = 0;
 				ChangeGameState(GameStates.End);
 			}
@@ -69,7 +73,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	void AddTime(float _timeSeconds){
+	public static void AddTime(float _timeSeconds){
 		timeLeftSeconds += _timeSeconds;
 	}
 }
