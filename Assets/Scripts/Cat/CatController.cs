@@ -56,8 +56,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
 			m_Body = transform.FindChild("Body").gameObject;
-			m_LeftPaw = transform.FindChild("CatPOVCam/PawHolder/LeftPaw").gameObject;
-			m_RightPaw = transform.FindChild("CatPOVCam/PawHolder/RightPaw").gameObject;
+			if (!m_LeftPaw)
+				m_LeftPaw = transform.FindChild("CatPOVCam/PawHolder/LeftPaw").gameObject;
+			if (!m_RightPaw)
+				m_RightPaw = transform.FindChild("CatPOVCam/PawHolder/RightPaw").gameObject;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_FovKick.Setup(m_Camera);
             m_HeadBob.Setup(m_Camera, m_StepInterval);
