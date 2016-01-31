@@ -29,6 +29,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 		[SerializeField] private Camera m_CatPOVCam;
 		[SerializeField] private Camera m_CatJumpCam;
+		[SerializeField] private GameObject m_CatLeftPaw;
+		[SerializeField] private GameObject m_CatRightPaw;
+
 
         private Camera m_Camera;
 		private GameObject m_Body;
@@ -53,8 +56,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
 			m_Body = transform.FindChild("Body").gameObject;
-			m_LeftPaw = transform.FindChild("CatPOVCam/LeftPaw").gameObject;
-			m_RightPaw = transform.FindChild("CatPOVCam/RightPaw").gameObject;
+			m_LeftPaw = transform.FindChild("CatPOVCam/PawHolder/LeftPaw").gameObject;
+			m_RightPaw = transform.FindChild("CatPOVCam/PawHolder/RightPaw").gameObject;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_FovKick.Setup(m_Camera);
             m_HeadBob.Setup(m_Camera, m_StepInterval);
@@ -106,7 +109,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				Time.timeScale = 0.5f;
 				m_Body.SetActive(true);
 				m_Body.transform.eulerAngles = new Vector3(0.0f,0.0f,0.0f);
-				m_Body.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(-90.0f,90.0f),Random.Range(-90.0f,90.0f),Random.Range(-90.0f,90.0f)));
+				m_Body.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(-90.0f,90.0f)*2,Random.Range(-90.0f,90.0f)*2,Random.Range(-90.0f,90.0f)*2));
 			} else {
 				Time.timeScale = 1.0f;
 				m_Body.SetActive(false);

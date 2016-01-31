@@ -25,7 +25,7 @@ public class SwiperNoSwiping : MonoBehaviour {
 
     }
 
-    public void Swipe(bool goRight = false)
+    public void Swipe(bool goRight)
     {
         if (goRight)
         {
