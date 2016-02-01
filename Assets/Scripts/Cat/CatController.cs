@@ -27,7 +27,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-		[SerializeField] private Camera m_CatPOVCam;
+        [SerializeField] private AudioClip m_MeowSound;
+        [SerializeField] private Camera m_CatPOVCam;
 		[SerializeField] private Camera m_CatJumpCam;
 		[SerializeField] private GameObject m_CatLeftPaw;
 		[SerializeField] private GameObject m_CatRightPaw;
@@ -99,10 +100,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 		private void EnableJumpCam(bool _enabled){
-			m_CatJumpCam.enabled = _enabled;
+			m_CatJumpCam.gameObject.SetActive(_enabled);
 			m_CatJumpCam.GetComponent<AudioListener>().enabled = _enabled;
 			m_CatPOVCam.GetComponent<AudioListener>().enabled = !_enabled;
-			m_Jumping = _enabled;
+            m_CatPOVCam.gameObject.SetActive(!_enabled);
+            m_Jumping = _enabled;
 
 			m_LeftPaw.SetActive(!_enabled);
 			m_RightPaw.SetActive(!_enabled);
@@ -172,6 +174,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void PlayJumpSound()
         {
             m_AudioSource.clip = m_JumpSound;
+            m_AudioSource.Play();
+        }
+
+        public void PlayMeowSound()
+        {
+            m_AudioSource.clip = m_MeowSound;
             m_AudioSource.Play();
         }
 
