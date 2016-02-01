@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/ballo.unity
+=======
+- path: Assets/Main.unity
+>>>>>>> 8fcdce66a5862fbd60bec8714ab872b9a490d675
   isLoaded: 1
   isActive: 1
